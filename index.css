@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: cursive;
+}
+
+:root {
+  /* colors */
+  --orange: orange;
+  --blue: blue;
+  --green: green;
+  --red: red;
+  --yellow: yellow;
+  --lightblue: lightblue;
+  --lightgreen: lightgreen;
+  --lightcoral: lightcoral;
+}
+
+.yellow__color {
+  background-color: var(--yellow);
+  border-color: var(--orange);
+}
+
+.lightblue__color {
+  background-color: var(--lightblue);
+  border-color: var(--blue);
+}
+
+.lightgreen__color {
+  background-color: var(--lightgreen);
+}
+
+.lightcoral__color {
+  background-color: var(--lightcoral);
+}
+
+.main-container {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 2em;
+}
+.main-container__heading {
+  font-size: 3em;
+  margin: 1em 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+.grid-container__findTask {
+  text-align: left;
+  margin-left: 1em;
+  color: var(--blue);
+  padding: 0 0.25em;
+}
+.grid-container__addTask {
+  text-align: left;
+  margin-left: 1em;
+  color: var(--orange);
+  padding: 0 0.25em;
+}
+.grid-container__fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  border-radius: 0.5em;
+  padding: 1em;
+}
+.grid-container__input-btn {
+  cursor: pointer;
+}
+
+.to-do-list__container {
+  border: 2px solid var(--red);
+  border-radius: 0.5em;
+  text-align: left;
+  padding: 0.5em;
+}
+
+.to-do-list,
+.done-list {
+  height: 50vh;
+  overflow: auto;
+}
+
+.to-do-list__container > h3,
+.done-list__container > h3 {
+  margin-bottom: 0.5em;
+}
+
+.done-list__container {
+  border: 2px solid var(--green);
+  border-radius: 0.5em;
+  text-align: left;
+  padding: 0.5em;
+}
+
+.align-list-items {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  background-color: var(--red);
+  padding: 1em;
+  border-radius: 0.25em;
+  margin-bottom: 0.25em;
+}/*# sourceMappingURL=index.css.map */

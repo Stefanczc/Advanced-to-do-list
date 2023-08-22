@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js" defer></script>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <h1 class="main-container__heading">TO DOs list</h1>
+        <div class="grid-container">
+            <div class="add-task__container grid-container__grid-item">
+                <form action="">
+                    <fieldset class="grid-container__fieldset yellow__color">
+                        <legend class="grid-container__addTask">Add a task</legend>
+                        <input id="inputTitle" type="text" placeholder="Task title...">
+                        <input id="inputDesc" type="text" placeholder="Task description...">
+                        <input id="addBtn" class="grid-container__input-btn" type="button" value="Add">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="find-task__container grid-container__grid-item">
+                <form action="">
+                    <fieldset class="grid-container__fieldset lightblue__color">
+                        <legend class="grid-container__findTask">Find a task</legend>
+                        <input id="searchInput" type="text" placeholder="Search term...">
+                        <input id="searchBtn" class="grid-container__input-btn" type="button" value="Search">
+                        <input id="clearBtn" class="grid-container__input-btn" type="button" value="Clear">
+                </form>
+            </div>
+            <div class="to-do-list__container grid-container__grid-item lightcoral__color">
+                <h3>To do</h3>
+                <ul class="to-do-list" id="to-do-list"></ul>
+            </div>
+            <div class="done-list__container grid-container__grid-item lightgreen__color">
+                <h3>Done</h3>
+                <ul class="done-list" id="done-list"></ul>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
