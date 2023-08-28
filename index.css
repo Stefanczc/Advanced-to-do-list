@@ -5,12 +5,16 @@
   font-family: cursive;
 }
 
+body {
+  background-color: bisque;
+}
+
 :root {
   /* colors */
   --orange: orange;
   --blue: blue;
   --green: green;
-  --red: red;
+  --red: #9F1111;
   --yellow: yellow;
   --lightblue: lightblue;
   --lightgreen: lightgreen;
