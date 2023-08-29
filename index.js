@@ -10,19 +10,15 @@ const todoItems = [];
 const doneItems = [];
 let counter = 1;
 
-function addListItem() {
+function addListItem(title, desc, isDone=false) {
     const newItem = document.createElement('li');
     newItem.classList = 'align-list-items';
 
-    if (inputTitle.value === '' || inputDesc.value === '') {
-        return;
-    }
-
     const containerText = document.createElement('div');
     const titleElem = document.createElement('h3');
-    titleElem.textContent = inputTitle.value;
+    titleElem.textContent = title;
     const descElem = document.createElement('p');
-    descElem.textContent = inputDesc.value;
+    descElem.textContent = desc;
     const cboxElem = document.createElement('input'); 
     cboxElem.type = 'checkbox';
     cboxElem.style.transform = 'scale(2)'; 
@@ -38,22 +34,50 @@ function addListItem() {
     containerText.appendChild(titleElem);
     containerText.appendChild(descElem);
     newItem.appendChild(containerText);
-    newItem.appendChild(btnElem); 
+    newItem.appendChild(btnElem);
 
-    if (itemsList.firstChild) {
-        itemsList.insertBefore(newItem, itemsList.firstChild);
-    } else {
-        itemsList.appendChild(newItem);
+    console.log(isDone)
+
+    if (isDone === true) {
+        if (doneList.firstChild) {
+            doneList.insertBefore(newItem, doneList.firstChild);
+        } else {
+            doneList.appendChild(newItem);
+        }
+        doneItems.push({
+            title: titleElem.textContent,
+            desc: descElem.textContent,
+            isDone: true,
+        })
+        // if (index !== -1) {
+        //     todoItems.splice(index, 1);
+        // }
+        newItem.style.backgroundColor = 'green';   
+        titleElem.style.textDecoration = 'line-through';
+        descElem.style.textDecoration = 'line-through';
+        cboxElem.checked = 'true';
     }
-    todoItems.push(newItem.textContent);
+    else {
+        if (itemsList.firstChild) {
+            itemsList.insertBefore(newItem, itemsList.firstChild);
+        } else {
+            itemsList.appendChild(newItem);
+        }
+        todoItems.push({
+            title: titleElem.textContent,
+            desc: descElem.textContent,
+            isDone: false,
+        });
+    }
+
     saveItemToLocalStorage();
 
     cboxElem.addEventListener('click', function () {
         
-        const index = todoItems.indexOf(newItem.textContent);
-        const indexDone = doneItems.indexOf(newItem.textContent);
+        const index = todoItems.findIndex(item => item.title === titleElem.textContent);
+        const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
 
-        if (titleElem.style.textDecoration !== 'line-through') {          //add these styles to a class (maybe toggle class ?)
+        if (titleElem.style.textDecoration !== 'line-through') {          
             if (doneList.firstChild) {
                 doneList.insertBefore(newItem, doneList.firstChild);
             }
@@ -63,7 +87,11 @@ function addListItem() {
             newItem.style.backgroundColor = 'green';   
             titleElem.style.textDecoration = 'line-through';
             descElem.style.textDecoration = 'line-through';
-            doneItems.push(newItem.textContent);
+            doneItems.push({
+                title: titleElem.textContent,
+                desc: descElem.textContent,
+                isDone: true,
+            });  
             if (index !== -1) {
                 todoItems.splice(index, 1);
             }
@@ -79,17 +107,21 @@ function addListItem() {
             newItem.style.backgroundColor = '#9F1111';
             titleElem.style.textDecoration = 'none';
             descElem.style.textDecoration = 'none';
-            todoItems.push(newItem.textContent);
+            todoItems.push({
+                title: titleElem.textContent,
+                desc: descElem.textContent,
+                isDone: false,
+            }); 
             if (indexDone !== -1) {
-                doneItems.splice(index, 1);
+                doneItems.splice(indexDone, 1);
             }
             saveItemToLocalStorage();
         }
     })
 
     btnElem.addEventListener('click', function () {
-        const index = todoItems.indexOf(newItem.textContent);
-        const indexDone = doneItems.indexOf(newItem.textContent);
+        const index = todoItems.findIndex(item => item.title === titleElem.textContent);
+        const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
 
         if (newItem.parentNode === itemsList) {
             itemsList.removeChild(newItem);
@@ -131,11 +163,35 @@ function searchItems() {
     });
 }
 
-
 function saveItemToLocalStorage() {
     localStorage.setItem('todoItems', JSON.stringify(todoItems));
     localStorage.setItem('doneItems', JSON.stringify(doneItems));
 }
 
+function getItemFromLocalStorage() {
+    const storedTodoItems = localStorage.getItem('todoItems');
+    if (storedTodoItems) {
+        const parsedTodoItems = JSON.parse(storedTodoItems);
+        parsedTodoItems.forEach(item => {
+            addListItem(item.title, item.desc, item.isDone);
+        });
+    }
+
+    const storedDoneItems = localStorage.getItem('doneItems');
+    if (storedDoneItems) {
+        const parsedDoneItems = JSON.parse(storedDoneItems);
+        parsedDoneItems.forEach(item => {
+            addListItem(item.title, item.desc, item.isDone);
+        });
+    }
+}
+
+
 searchBtn.addEventListener('click', searchItems);
-addBtn.addEventListener('click', addListItem);
+addBtn.addEventListener('click', () => {
+    addListItem(inputTitle.value, inputDesc.value);
+});
+
+window.addEventListener('load', () => {
+    getItemFromLocalStorage();
+});
