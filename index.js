@@ -10,7 +10,7 @@ const todoItems = [];
 const doneItems = [];
 let counter = 1;
 
-function addListItem(title, desc, isDone=false) {
+function addListItem(title, desc, isDone) {
     const newItem = document.createElement('li');
     newItem.classList = 'align-list-items';
 
@@ -30,99 +30,10 @@ function addListItem(title, desc, isDone=false) {
     btnElem.style.width = '35px';
     btnElem.style.cursor = 'pointer';
 
-    newItem.appendChild(cboxElem); 
-    containerText.appendChild(titleElem);
-    containerText.appendChild(descElem);
-    newItem.appendChild(containerText);
-    newItem.appendChild(btnElem);
-
-    console.log(isDone)
-
-    if (isDone === true) {
-        if (doneList.firstChild) {
-            doneList.insertBefore(newItem, doneList.firstChild);
-        } else {
-            doneList.appendChild(newItem);
-        }
-        doneItems.push({
-            title: titleElem.textContent,
-            desc: descElem.textContent,
-            isDone: true,
-        })
-        // if (index !== -1) {
-        //     todoItems.splice(index, 1);
-        // }
-        newItem.style.backgroundColor = 'green';   
-        titleElem.style.textDecoration = 'line-through';
-        descElem.style.textDecoration = 'line-through';
-        cboxElem.checked = 'true';
-    }
-    else {
-        if (itemsList.firstChild) {
-            itemsList.insertBefore(newItem, itemsList.firstChild);
-        } else {
-            itemsList.appendChild(newItem);
-        }
-        todoItems.push({
-            title: titleElem.textContent,
-            desc: descElem.textContent,
-            isDone: false,
-        });
-    }
-
-    saveItemToLocalStorage();
-
-    cboxElem.addEventListener('click', function () {
-        
-        const index = todoItems.findIndex(item => item.title === titleElem.textContent);
-        const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
-
-        if (titleElem.style.textDecoration !== 'line-through') {          
-            if (doneList.firstChild) {
-                doneList.insertBefore(newItem, doneList.firstChild);
-            }
-            else {
-                doneList.appendChild(newItem);
-            }
-            newItem.style.backgroundColor = 'green';   
-            titleElem.style.textDecoration = 'line-through';
-            descElem.style.textDecoration = 'line-through';
-            doneItems.push({
-                title: titleElem.textContent,
-                desc: descElem.textContent,
-                isDone: true,
-            });  
-            if (index !== -1) {
-                todoItems.splice(index, 1);
-            }
-            saveItemToLocalStorage();
-        }
-        else {
-            if (itemsList.firstChild) {
-                itemsList.insertBefore(newItem, itemsList.firstChild);
-            }
-            else {
-                itemsList.appendChild(newItem);
-            }
-            newItem.style.backgroundColor = '#9F1111';
-            titleElem.style.textDecoration = 'none';
-            descElem.style.textDecoration = 'none';
-            todoItems.push({
-                title: titleElem.textContent,
-                desc: descElem.textContent,
-                isDone: false,
-            }); 
-            if (indexDone !== -1) {
-                doneItems.splice(indexDone, 1);
-            }
-            saveItemToLocalStorage();
-        }
-    })
-
     btnElem.addEventListener('click', function () {
         const index = todoItems.findIndex(item => item.title === titleElem.textContent);
         const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
-
+    
         if (newItem.parentNode === itemsList) {
             itemsList.removeChild(newItem);
             if (index !== -1) {
@@ -137,10 +48,92 @@ function addListItem(title, desc, isDone=false) {
         saveItemToLocalStorage();
     });
 
+    cboxElem.addEventListener('click', function () {
+        const index = todoItems.findIndex(item => item.title === titleElem.textContent);
+        const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
+    
+        if (titleElem.style.textDecoration !== 'line-through') {
+            newItem.classList.add('isDone');
+            if (doneList.firstChild) {
+                doneList.insertBefore(newItem, doneList.firstChild);
+            }
+            else {
+                doneList.appendChild(newItem);
+            }
+            newItem.style.backgroundColor = 'green';
+            titleElem.style.textDecoration = 'line-through';
+            descElem.style.textDecoration = 'line-through';
+            doneItems.push({
+                title: titleElem.textContent,
+                desc: descElem.textContent
+            });
+            if (index !== -1) {
+                todoItems.splice(index, 1);
+            }
+        }
+        else {
+            newItem.classList.remove('isDone');
+            if (itemsList.firstChild) {
+                itemsList.insertBefore(newItem, itemsList.firstChild);
+            }
+            else {
+                itemsList.appendChild(newItem);
+            }
+            newItem.style.backgroundColor = '#9F1111';
+            titleElem.style.textDecoration = 'none';
+            descElem.style.textDecoration = 'none';
+            todoItems.push({
+                title: titleElem.textContent,
+                desc: descElem.textContent
+            });
+            if (indexDone !== -1) {
+                doneItems.splice(indexDone, 1);
+            }
+          
+        }
+        saveItemToLocalStorage();
+    
+    });
+    
+    newItem.appendChild(cboxElem); 
+    containerText.appendChild(titleElem);
+    containerText.appendChild(descElem);
+    newItem.appendChild(containerText);
+    newItem.appendChild(btnElem);
+
+    console.log(isDone)
+
+    if (isDone) {
+        if (doneList.firstChild) {
+            doneList.insertBefore(newItem, doneList.firstChild);
+        } else {
+            doneList.appendChild(newItem);
+        }
+        doneItems.push({
+            title: titleElem.textContent,
+            desc: descElem.textContent
+        })
+        newItem.style.backgroundColor = 'green';   
+        titleElem.style.textDecoration = 'line-through';
+        descElem.style.textDecoration = 'line-through';
+        cboxElem.checked = 'true';
+    }
+    else {
+        if (itemsList.firstChild) {
+            itemsList.insertBefore(newItem, itemsList.firstChild);
+        } else {
+            itemsList.appendChild(newItem);
+        }
+        todoItems.push({
+            title: titleElem.textContent,
+            desc: descElem.textContent
+        });
+    }
     inputTitle.value = '';
     inputDesc.value = '';
     counter++;
 }
+
 
 function searchItems() {
     const searchText = inputSearch.value.toLowerCase(); 
@@ -164,6 +157,7 @@ function searchItems() {
 }
 
 function saveItemToLocalStorage() {
+    console.log('saveItemToLocalStorage');
     localStorage.setItem('todoItems', JSON.stringify(todoItems));
     localStorage.setItem('doneItems', JSON.stringify(doneItems));
 }
@@ -173,23 +167,26 @@ function getItemFromLocalStorage() {
     if (storedTodoItems) {
         const parsedTodoItems = JSON.parse(storedTodoItems);
         parsedTodoItems.forEach(item => {
-            addListItem(item.title, item.desc, item.isDone);
+            addListItem(item.title, item.desc, false);
         });
     }
 
     const storedDoneItems = localStorage.getItem('doneItems');
     if (storedDoneItems) {
         const parsedDoneItems = JSON.parse(storedDoneItems);
+        console.log(parsedDoneItems)
         parsedDoneItems.forEach(item => {
-            addListItem(item.title, item.desc, item.isDone);
+            addListItem(item.title, item.desc, true);
         });
     }
 }
 
 
 searchBtn.addEventListener('click', searchItems);
+
 addBtn.addEventListener('click', () => {
     addListItem(inputTitle.value, inputDesc.value);
+    saveItemToLocalStorage();
 });
 
 window.addEventListener('load', () => {

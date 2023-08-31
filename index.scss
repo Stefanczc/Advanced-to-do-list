@@ -5,16 +5,19 @@
     font-family: cursive;
 }
 body {
-    background-color: bisque;
+    background-color: #200D25;
+}
+.main-container__heading {
+    color: #fff;
 }
 :root {
     /* colors */
     --orange: orange;
-    --blue: blue;
+    --blue: #fff;
     --green: green;
     --red: #9F1111;
-    --yellow: yellow;
-    --lightblue: lightblue;
+    --yellow: #094F77;
+    --lightblue: #C37BE0;
     --lightgreen: lightgreen;
     --lightcoral: lightcoral;
     
