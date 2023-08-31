@@ -182,6 +182,9 @@ function getItemFromLocalStorage() {
 searchBtn.addEventListener('click', searchItems);
 
 addBtn.addEventListener('click', () => {
+    if (inputTitle.value === '' || inputDesc.value === '') {
+        return;
+    }
     addListItem(inputTitle.value, inputDesc.value);
     saveItemToLocalStorage();
 });

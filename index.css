@@ -56,6 +56,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-height: 150px;
   gap: 1em;
 }
 .grid-container__findTask {
@@ -78,7 +79,19 @@ body {
   padding: 1em;
 }
 .grid-container__input-btn {
+  padding: 7px 0;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  background-color: rgb(91, 161, 174);
+  color: #fff;
+  transition-duration: 0.25s;
+}
+.grid-container__input-btn:hover {
+  background-color: gold;
+}
+.grid-container__input-txt {
+  padding: 5px 10px;
 }
 
 .to-do-list__container {
