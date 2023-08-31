@@ -12,6 +12,7 @@ let counter = 1;
 
 function addListItem(title, desc, isDone) {
     const newItem = document.createElement('li');
+    newItem.style.fontSize = '0.85em';
     newItem.classList = 'align-list-items';
 
     const containerText = document.createElement('div');
