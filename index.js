@@ -17,8 +17,10 @@ function addListItem(title, desc, isDone) {
     const containerText = document.createElement('div');
     const titleElem = document.createElement('h3');
     titleElem.textContent = title;
+    titleElem.style.color = '#fff';
     const descElem = document.createElement('p');
     descElem.textContent = desc;
+    descElem.style.color = '#fff';
     const cboxElem = document.createElement('input'); 
     cboxElem.type = 'checkbox';
     cboxElem.style.transform = 'scale(2)'; 
@@ -101,8 +103,6 @@ function addListItem(title, desc, isDone) {
     newItem.appendChild(containerText);
     newItem.appendChild(btnElem);
 
-    console.log(isDone)
-
     if (isDone) {
         if (doneList.firstChild) {
             doneList.insertBefore(newItem, doneList.firstChild);
@@ -134,7 +134,6 @@ function addListItem(title, desc, isDone) {
     counter++;
 }
 
-
 function searchItems() {
     const searchText = inputSearch.value.toLowerCase(); 
     const combinedLists = Array.from(itemsList.children).concat(Array.from(doneList.children));
@@ -144,7 +143,7 @@ function searchItems() {
         const desc = item.querySelector('p').textContent.toLowerCase();
 
         if (title.includes(searchText) || desc.includes(searchText)) {
-            item.style.display = 'flex'; 
+            item.style.display = 'flex';
         } else {
             item.style.display = 'none'; 
         }
@@ -157,7 +156,6 @@ function searchItems() {
 }
 
 function saveItemToLocalStorage() {
-    console.log('saveItemToLocalStorage');
     localStorage.setItem('todoItems', JSON.stringify(todoItems));
     localStorage.setItem('doneItems', JSON.stringify(doneItems));
 }
@@ -174,7 +172,6 @@ function getItemFromLocalStorage() {
     const storedDoneItems = localStorage.getItem('doneItems');
     if (storedDoneItems) {
         const parsedDoneItems = JSON.parse(storedDoneItems);
-        console.log(parsedDoneItems)
         parsedDoneItems.forEach(item => {
             addListItem(item.title, item.desc, true);
         });
