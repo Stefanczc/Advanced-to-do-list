@@ -183,9 +183,21 @@ function getItemFromLocalStorage() {
 searchBtn.addEventListener('click', searchItems);
 
 addBtn.addEventListener('click', () => {
-    if (inputTitle.value === '' || inputDesc.value === '') {
+    // if (inputTitle.value === '' || inputDesc.value === '') {
+    //     alert('Data is missing on Task title / Task description');
+    // }
+    if (inputTitle.value === '' && inputDesc.value === '') {
+        alert("What are you doing, sir ?");
         return;
     }
+    if (inputTitle.value === '') {
+        alert('Add a title, sir!');
+        return;
+    }
+    if (inputDesc.value === '') {
+        alert('Add a description, sir!');
+        return;
+    }  
     addListItem(inputTitle.value, inputDesc.value);
     saveItemToLocalStorage();
 });
