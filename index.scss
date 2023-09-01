@@ -5,36 +5,21 @@
     font-family: cursive;
 }
 body {
-    background-color: rgb(46, 54, 112);
+    background-color: #383E42;
 }
 .main-container__heading {
     color: #fff;
 }
 :root {
-    /* the colors were updated but not the names */
-    --orange: #fff;
-    --blue: gold;
-    --green: green;
-    --red: #9F1111;
-    --yellow: #094F77;
-    --lightblue: #094F77;
-    --lightgreen: rgb(27, 110, 96);
-    --lightcoral: rgb(177, 118, 119);
-    
-}
-.yellow__color {
-    background-color: var(--yellow);
-    border-color: var(--orange);
+    --white: #fff;
+    --gold: gold;
+    --green: #009E60;
+    --red:  #cf352e;
+    --lightblue: #094F77;   
 }
 .lightblue__color {
     background-color: var(--lightblue);
-    border-color: var(--blue);
-}
-.lightgreen__color {
-    background-color: var(--lightgreen);
-}
-.lightcoral__color {
-    background-color: var(--lightcoral);
+    border-color: var(--white);
 }
 .main-container {
     text-align: center;
@@ -52,13 +37,13 @@ body {
     &__findTask {
         text-align: left;
         margin-left: 1em;
-        color: var(--blue);
+        color: var(--gold);
         padding: 0 0.25em;
     }
     &__addTask {
         text-align: left;
         margin-left: 1em;
-        color: var(--orange);
+        color: var(--white);
         padding: 0 0.25em;
     }
     &__fieldset {
@@ -77,7 +62,7 @@ body {
         color: #fff;
         transition-duration: 0.25s;
         &:hover {
-            background-color: gold;
+            background-color: var(--gold);
         }
     }
     &__input-txt {
@@ -88,11 +73,21 @@ body {
         color: #fff;
     }
 }
-.to-do-list__container {
+.to-do-list__container,
+.done-list__container {
     border-radius: 0.5em;
     text-align: left;
-    padding: 0.5em;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    padding: 1em 1.5em;
+    background-color: var(--lightblue);
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+     rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
+       rgba(0, 0, 0, 0.06) 0px 2px 1px,
+        rgba(0, 0, 0, 0.09) 0px 4px 2px,
+         rgba(0, 0, 0, 0.09) 0px 8px 4px,
+          rgba(0, 0, 0, 0.09) 0px 16px 8px,
+           rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    
 }
 .to-do-list,
 .done-list {
@@ -101,14 +96,8 @@ body {
 }
 .to-do-list__container > h3,
 .done-list__container > h3 {
-    margin-bottom: 0.5em;
-}
-
-.done-list__container {
-    border-radius: 0.5em;
-    text-align: left;
-    padding: 0.5em;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    margin-bottom: 1em;
+    color: var(--white);
 }
 .align-list-items {
     list-style-type: none;
@@ -119,4 +108,30 @@ body {
     padding: 1em;
     border-radius: 0.25em;
     margin-bottom: 0.25em;
+    font-size: 0.85em;
+}
+.custom__title {
+    color: var(--gold);
+    font-size: 1.35em;
+}
+.custom__items {
+    color: var(--white);
+}
+.custom__img {
+    margin-left: auto;
+    width: 2.5em;
+    cursor: pointer;
+}
+.custom__checkbox {
+    transform: scale(2);
+    cursor: pointer;
+}
+.isDone {
+    text-decoration: line-through;
+    color: var(--green);
+}
+@media screen and (max-width: 600px) { // responsiveness on small devices
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
 }

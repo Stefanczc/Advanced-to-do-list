@@ -1,6 +1,6 @@
 const inputTitle = document.getElementById('inputTitle');
 const inputDesc = document.getElementById('inputDesc');
-const itemsList = document.getElementById('to-do-list');
+const toDoList = document.getElementById('to-do-list');
 const doneList = document.getElementById('done-list');
 const addBtn = document.getElementById('addBtn');
 const searchBtn = document.getElementById('searchBtn');
@@ -10,35 +10,29 @@ const todoItems = [];
 const doneItems = [];
 let counter = 1;
 
-function addListItem(title, desc, isDone) {
+function addListItem(title, desc, isDone) { //parameters included so that after I get the items from local storage I know which elements go where
     const newItem = document.createElement('li');
-    newItem.style.fontSize = '0.85em';
     newItem.classList = 'align-list-items';
-
     const containerText = document.createElement('div');
     const titleElem = document.createElement('h3');
     titleElem.textContent = title;
-    titleElem.style.color = '#fff';
+    titleElem.classList.add('custom__title');
     const descElem = document.createElement('p');
     descElem.textContent = desc;
-    descElem.style.color = '#fff';
+    descElem.classList.add('custom__items');
     const cboxElem = document.createElement('input'); 
     cboxElem.type = 'checkbox';
-    cboxElem.style.transform = 'scale(2)'; 
-    cboxElem.style.outline = 'none';
-    cboxElem.style.cursor = 'pointer';
-    const btnElem = document.createElement('img');
-    btnElem.style.marginLeft = 'auto';  
-    btnElem.src = 'new-trash.svg';      
-    btnElem.style.width = '35px';
-    btnElem.style.cursor = 'pointer';
-
-    btnElem.addEventListener('click', function () {
+    cboxElem.classList.add('custom__checkbox');
+    const removeElem = document.createElement('img');
+    removeElem.src = 'new-trash.svg'; 
+    removeElem.classList.add('custom__img');
+   
+    removeElem.addEventListener('click', function () { // find element based on the title and remove from the correct list
         const index = todoItems.findIndex(item => item.title === titleElem.textContent);
         const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
     
-        if (newItem.parentNode === itemsList) {
-            itemsList.removeChild(newItem);
+        if (newItem.parentNode === toDoList) {
+            toDoList.removeChild(newItem);
             if (index !== -1) {
                 todoItems.splice(index, 1);
             }
@@ -55,57 +49,54 @@ function addListItem(title, desc, isDone) {
         const index = todoItems.findIndex(item => item.title === titleElem.textContent);
         const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
     
-        if (titleElem.style.textDecoration !== 'line-through') {
-            newItem.classList.add('isDone');
-            if (doneList.firstChild) {
+        if (titleElem.style.textDecoration !== 'line-through') { // append child to the correct list
+            if (doneList.firstChild) { // condition in order to add newItem as first list item
                 doneList.insertBefore(newItem, doneList.firstChild);
             }
             else {
                 doneList.appendChild(newItem);
             }
-            newItem.style.backgroundColor = 'green';
+            newItem.style.backgroundColor = '#009E60';
             titleElem.style.textDecoration = 'line-through';
             descElem.style.textDecoration = 'line-through';
             doneItems.push({
                 title: titleElem.textContent,
                 desc: descElem.textContent
             });
-            if (index !== -1) {
+            if (index !== -1) { // update prior list 
                 todoItems.splice(index, 1);
             }
         }
         else {
-            newItem.classList.remove('isDone');
-            if (itemsList.firstChild) {
-                itemsList.insertBefore(newItem, itemsList.firstChild);
+            if (toDoList.firstChild) { // condition in order to add newItem as first list item
+                toDoList.insertBefore(newItem, toDoList.firstChild);
             }
             else {
-                itemsList.appendChild(newItem);
+                toDoList.appendChild(newItem);
             }
-            newItem.style.backgroundColor = '#9F1111';
+            newItem.style.backgroundColor = '#cf352e';
             titleElem.style.textDecoration = 'none';
             descElem.style.textDecoration = 'none';
             todoItems.push({
                 title: titleElem.textContent,
                 desc: descElem.textContent
             });
-            if (indexDone !== -1) {
+            if (indexDone !== -1) { // update prior list
                 doneItems.splice(indexDone, 1);
             }
-          
         }
         saveItemToLocalStorage();
-    
     });
     
+    // appending children to li element
     newItem.appendChild(cboxElem); 
     containerText.appendChild(titleElem);
     containerText.appendChild(descElem);
     newItem.appendChild(containerText);
-    newItem.appendChild(btnElem);
+    newItem.appendChild(removeElem);
 
-    if (isDone) {
-        if (doneList.firstChild) {
+    if (isDone) { // condition in order to display in the correct list 
+        if (doneList.firstChild) { // appending as it was before, same logic as on the cbox listener
             doneList.insertBefore(newItem, doneList.firstChild);
         } else {
             doneList.appendChild(newItem);
@@ -114,16 +105,16 @@ function addListItem(title, desc, isDone) {
             title: titleElem.textContent,
             desc: descElem.textContent
         })
-        newItem.style.backgroundColor = 'green';   
+        newItem.style.backgroundColor = '#009E60';   
         titleElem.style.textDecoration = 'line-through';
         descElem.style.textDecoration = 'line-through';
-        cboxElem.checked = 'true';
+        cboxElem.checked = 'true'; // included this because it was not saved elsewhere
     }
     else {
-        if (itemsList.firstChild) {
-            itemsList.insertBefore(newItem, itemsList.firstChild);
+        if (toDoList.firstChild) { // appending as it was before, same logic as on the cbox listener
+            toDoList.insertBefore(newItem, toDoList.firstChild);
         } else {
-            itemsList.appendChild(newItem);
+            toDoList.appendChild(newItem);
         }
         todoItems.push({
             title: titleElem.textContent,
@@ -136,56 +127,54 @@ function addListItem(title, desc, isDone) {
 }
 
 function searchItems() {
-    const searchText = inputSearch.value.toLowerCase(); 
-    const combinedLists = Array.from(itemsList.children).concat(Array.from(doneList.children));
+    const searchText = inputSearch.value.toLowerCase(); // created variable so that it can be compared to the text content of the li children (title + desc) 
+    const combinedLists = Array.from(toDoList.children).concat(Array.from(doneList.children)); // created 2 arrays from the existing ul lists and combined these 2 together
 
-    combinedLists.forEach(item => {
+    combinedLists.forEach(item => { // iterated through the new combined list in order to get the text content
         const title = item.querySelector('h3').textContent.toLowerCase();
         const desc = item.querySelector('p').textContent.toLowerCase();
 
-        if (title.includes(searchText) || desc.includes(searchText)) {
+        if (title.includes(searchText) || desc.includes(searchText)) { // if either texts from title or description includes the searched text then display the li
             item.style.display = 'flex';
         } else {
             item.style.display = 'none'; 
         }
 
-        clearBtn.addEventListener('click', () => {
+        clearBtn.addEventListener('click', () => { // included clear button listener here because it seemed that it belongs to the same search flow
             inputSearch.value = '';
             item.style.display = 'flex';
         });
     });
 }
 
-function saveItemToLocalStorage() {
-    localStorage.setItem('todoItems', JSON.stringify(todoItems));
+function saveItemToLocalStorage() { // saved the arrays to the local storage
+    localStorage.setItem('todoItems', JSON.stringify(todoItems)); 
     localStorage.setItem('doneItems', JSON.stringify(doneItems));
 }
 
-function getItemFromLocalStorage() {
+function getItemFromLocalStorage() { // parsed the arrrays saved to local storage
     const storedTodoItems = localStorage.getItem('todoItems');
     if (storedTodoItems) {
         const parsedTodoItems = JSON.parse(storedTodoItems);
-        parsedTodoItems.forEach(item => {
+        parsedTodoItems.forEach(item => { // iterated through the parsed items 
             addListItem(item.title, item.desc, false);
+            // called the 'addListItem' function with the required parameters (title, description and boolean so it gets added to the 'To Do' list)
         });
     }
 
     const storedDoneItems = localStorage.getItem('doneItems');
     if (storedDoneItems) {
         const parsedDoneItems = JSON.parse(storedDoneItems);
-        parsedDoneItems.forEach(item => {
+        parsedDoneItems.forEach(item => { // iterated through the parsed items
             addListItem(item.title, item.desc, true);
+            // called the 'addListItem' function with the required parameters (title, description and boolean so it gets added to the 'Done' list)
         });
     }
 }
 
-
-searchBtn.addEventListener('click', searchItems);
-
-addBtn.addEventListener('click', () => {
-    // if (inputTitle.value === '' || inputDesc.value === '') {
-    //     alert('Data is missing on Task title / Task description');
-    // }
+//global listeners
+searchBtn.addEventListener('click', searchItems); // calls the function
+addBtn.addEventListener('click', () => { // included alerts 
     if (inputTitle.value === '' && inputDesc.value === '') {
         alert("What are you doing, sir ?");
         return;
@@ -198,10 +187,9 @@ addBtn.addEventListener('click', () => {
         alert('Add a description, sir!');
         return;
     }  
-    addListItem(inputTitle.value, inputDesc.value);
+    addListItem(inputTitle.value, inputDesc.value); // initial call with text content from title and description fields
     saveItemToLocalStorage();
 });
-
-window.addEventListener('load', () => {
+window.addEventListener('load', () => { // required for local storage when page loads
     getItemFromLocalStorage();
 });
