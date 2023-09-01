@@ -31,18 +31,23 @@ function addListItem(title, desc, isDone) { //parameters included so that after 
         const index = todoItems.findIndex(item => item.title === titleElem.textContent);
         const indexDone = doneItems.findIndex(item => item.title === titleElem.textContent);
     
-        if (newItem.parentNode === toDoList) {
-            toDoList.removeChild(newItem);
-            if (index !== -1) {
-                todoItems.splice(index, 1);
+        if (window.confirm('Are you sure you want to remove this task ?')) { // included prompt for confirmation
+            if (newItem.parentNode === toDoList) {
+                toDoList.removeChild(newItem);
+                if (index !== -1) {
+                    todoItems.splice(index, 1);
+                }
+            } else {
+                doneList.removeChild(newItem);
+                if (indexDone !== -1) {
+                    doneItems.splice(index, 1);
+                }
             }
-        } else {
-            doneList.removeChild(newItem);
-            if (indexDone !== -1) {
-                doneItems.splice(index, 1);
-            }
+            saveItemToLocalStorage();
         }
-        saveItemToLocalStorage();
+        else { // return if cancel is selected
+            return;
+        }
     });
 
     cboxElem.addEventListener('click', function () {
