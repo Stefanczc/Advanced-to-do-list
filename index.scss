@@ -51,7 +51,7 @@ body {
         flex-direction: column;
         gap: 0.25em;
         border-radius: 0.5em;
-        padding: 1em;
+        padding: 1em 1.25em;
     }
     &__input-btn {
         padding: 0.5em 0;
@@ -64,6 +64,7 @@ body {
         &:hover {
             background-color: var(--gold);
         }
+        border-radius: 0.2em;
     }
     &__input-txt {
         padding: 0.5em 0.5em;
@@ -71,6 +72,7 @@ body {
         border: none;
         outline: none;
         color: #fff;
+        border-radius: 0.2em;
     }
 }
 .to-do-list__container,
@@ -109,6 +111,10 @@ body {
     border-radius: 0.25em;
     margin-bottom: 0.25em;
     font-size: 0.85em;
+    transition-duration: 0.25s;
+    &:hover {
+        opacity: 0.75;
+    }
 }
 .custom__title {
     color: var(--gold);
@@ -125,6 +131,7 @@ body {
 .custom__checkbox {
     transform: scale(2);
     cursor: pointer;
+    margin-left: 1.25em;
 }
 .isDone {
     text-decoration: line-through;

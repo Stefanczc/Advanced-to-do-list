@@ -58,7 +58,7 @@ body {
   flex-direction: column;
   gap: 0.25em;
   border-radius: 0.5em;
-  padding: 1em;
+  padding: 1em 1.25em;
 }
 .grid-container__input-btn {
   padding: 0.5em 0;
@@ -68,6 +68,7 @@ body {
   background-color: rgb(91, 161, 174);
   color: #fff;
   transition-duration: 0.25s;
+  border-radius: 0.2em;
 }
 .grid-container__input-btn:hover {
   background-color: var(--gold);
@@ -78,6 +79,7 @@ body {
   border: none;
   outline: none;
   color: #fff;
+  border-radius: 0.2em;
 }
 
 .to-do-list__container,
@@ -111,6 +113,10 @@ body {
   border-radius: 0.25em;
   margin-bottom: 0.25em;
   font-size: 0.85em;
+  transition-duration: 0.25s;
+}
+.align-list-items:hover {
+  opacity: 0.75;
 }
 
 .custom__title {
@@ -131,6 +137,7 @@ body {
 .custom__checkbox {
   transform: scale(2);
   cursor: pointer;
+  margin-left: 1.25em;
 }
 
 .isDone {
