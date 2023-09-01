@@ -37,17 +37,18 @@ function addListItem(title, desc, isDone) { //parameters included so that after 
                 if (index !== -1) {
                     todoItems.splice(index, 1);
                 }
-            } else {
+            }
+            if (newItem.parentNode === doneList) {
                 doneList.removeChild(newItem);
                 if (indexDone !== -1) {
                     doneItems.splice(index, 1);
                 }
             }
-            saveItemToLocalStorage();
         }
         else { // return if cancel is selected
             return;
         }
+        saveItemToLocalStorage();
     });
 
     cboxElem.addEventListener('click', function () {
