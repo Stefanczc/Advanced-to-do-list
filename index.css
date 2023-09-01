@@ -132,6 +132,14 @@ body {
   margin-left: auto;
   width: 2.5em;
   cursor: pointer;
+  transition-duration: 1.5s;
+  border-radius: 50%;
+}
+.custom__img:hover {
+  transform: rotate(1turn);
+  border: 2px solid var(--gold);
+  background-color: var(--gold);
+  padding: 0.15em;
 }
 
 .custom__checkbox {
